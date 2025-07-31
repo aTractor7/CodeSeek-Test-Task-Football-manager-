@@ -15,8 +15,8 @@ public class TeamCreateDto {
     private String name;
 
     @NotNull(message = "Commission can't be empty")
-    @DecimalMin(value = "0.0", inclusive = true, message = "Commission can't be less than 0")
-    @DecimalMax(value = "0.1", inclusive = true, message = "Commission can't be greater than 0.1 (10%)")
+    @DecimalMin(value = "0.0", message = "Commission can't be less than 0")
+    @DecimalMax(value = "0.1", message = "Commission can't be greater than 0.1 (10%)")
     private Double commission;
 
     private BigDecimal balance;

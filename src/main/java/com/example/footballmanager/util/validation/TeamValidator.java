@@ -13,11 +13,23 @@ public class TeamValidator {
 
     private final TeamRepository teamRepository;
 
-    public boolean validate(TeamCreateDto teamCreateDto, Errors bindingResult) {
+    public boolean creationValidate(TeamCreateDto teamCreateDto, Errors bindingResult) {
         if(teamCreateDto.getName() == null || teamCreateDto.getName().isBlank())
             return false;
 
         if(teamRepository.existsByName(teamCreateDto.getName())) {
+            bindingResult.rejectValue("name", "400", "Team name already exists");
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean updateValidate(Long id, TeamCreateDto teamCreateDto, Errors bindingResult) {
+        if(teamCreateDto.getName() == null || teamCreateDto.getName().isBlank())
+            return false;
+
+        if(teamRepository.existsByNameAndIdNot(teamCreateDto.getName(), id)) {
             bindingResult.rejectValue("name", "400", "Team name already exists");
             return false;
         }

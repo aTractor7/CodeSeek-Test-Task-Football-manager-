@@ -33,7 +33,7 @@ public class TeamController {
 
     @PostMapping
     public ResponseEntity<TeamDto> create(@RequestBody @Valid TeamCreateDto teamCreateDto, BindingResult bindingResult) {
-        validator.validate(teamCreateDto, bindingResult);
+        validator.creationValidate(teamCreateDto, bindingResult);
 
         if(bindingResult.hasErrors()) {
             throw new ValidationException(generateFieldErrorMessage(bindingResult.getFieldErrors()));
@@ -57,7 +57,14 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamDto> update(@PathVariable Long id, @RequestBody @Valid TeamCreateDto teamDto) {
+    public ResponseEntity<TeamDto> update(@PathVariable Long id, @RequestBody @Valid TeamCreateDto teamDto,
+                                          BindingResult bindingResult) {
+        validator.updateValidate(id, teamDto, bindingResult);
+
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException(generateFieldErrorMessage(bindingResult.getFieldErrors()));
+        }
+
         Team updatedTeam = convertToTeam(teamDto);
         return ResponseEntity.ok(convertToTeamDto(teamService.update(id, updatedTeam)));
     }
