@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public class PlayerRepositoryTest {
         Player newPlayer = Player.builder()
                 .name("New Guy")
                 .age(22)
-                .experienceMonths(12)
+                .debutDate(LocalDate.of(2002, 3, 13))
                 .team(testTeam)
                 .build();
 
@@ -71,12 +72,12 @@ public class PlayerRepositoryTest {
     @DisplayName("Update player")
     public void update_ShouldModifyPlayer() {
         Player player = testPlayers.get(0);
-        player.setExperienceMonths(99);
+        player.setAge(25);
 
         playerRepository.save(player);
 
         Player updated = playerRepository.findById(player.getId()).orElseThrow();
-        assertThat(updated.getExperienceMonths()).isEqualTo(99);
+        assertThat(updated.getAge()).isEqualTo(25);
     }
 
     @Test

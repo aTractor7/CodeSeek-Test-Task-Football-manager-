@@ -5,6 +5,7 @@ import com.example.footballmanager.entity.Team;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TestDataFactory {
@@ -22,13 +23,13 @@ public class TestDataFactory {
                 Player.builder()
                         .name("Sasha")
                         .age(25)
-                        .experienceMonths(20)
+                        .debutDate(LocalDate.of(2010, 3, 13))
                         .team(team)
                         .build(),
                 Player.builder()
                         .name("Kolya")
                         .age(30)
-                        .experienceMonths(40)
+                        .debutDate(LocalDate.of(2010, 3, 13))
                         .team(team)
                         .build());
     }
