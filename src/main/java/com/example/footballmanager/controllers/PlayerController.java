@@ -1,19 +1,20 @@
 package com.example.footballmanager.controllers;
 
+import com.example.footballmanager.dto.ErrorResponse;
 import com.example.footballmanager.dto.PlayerCreateDto;
 import com.example.footballmanager.dto.PlayerDto;
 import com.example.footballmanager.entity.Player;
-import com.example.footballmanager.entity.Team;
 import com.example.footballmanager.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
+import static com.example.footballmanager.util.ErrorUtils.getStackTraceAsString;
 import static com.example.footballmanager.util.RequestUtils.getSavedLocation;
 
 @RestController
@@ -50,9 +51,18 @@ public class PlayerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         playerService.delete(id);
-        return ResponseEntity.ok(Map.of("message", "Player deleted successfully"));
+        return ResponseEntity.ok("Player deleted successfully");
+    }
+
+    @PatchMapping("/{playerId}/transfer/{targetTeamId}")
+    public ResponseEntity<String> transferPlayer(
+            @PathVariable Long playerId,
+            @PathVariable Long targetTeamId
+    ) {
+        playerService.transferPlayer(playerId, targetTeamId);
+        return ResponseEntity.ok("Player transferred successfully.");
     }
 
     private Player convertToPlayer(PlayerCreateDto playerCreateDto) {
@@ -63,6 +73,13 @@ public class PlayerController {
 
     private PlayerDto convertToPlayerDto(Player player) {
         return modelMapper.map(player, PlayerDto.class);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(IllegalArgumentException e) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "Wrong transfer param",e.getMessage(), getStackTraceAsString(e), LocalDateTime.now());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
 

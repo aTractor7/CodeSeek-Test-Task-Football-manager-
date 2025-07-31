@@ -70,9 +70,9 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         teamService.delete(id);
-        return ResponseEntity.ok(Map.of("message", "Team deleted successfully"));
+        return ResponseEntity.ok("Team deleted successfully");
     }
 
     public Team convertToTeam(TeamCreateDto teamCreateDto) {
