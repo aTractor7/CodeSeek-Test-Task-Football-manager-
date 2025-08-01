@@ -1,0 +1,4 @@
+
+SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/football_manager
+SPRING_DATASOURCE_USERNAME=user
+SPRING_DATASOURCE_PASSWORD=password
