@@ -15,6 +15,7 @@ import static com.example.footballmanager.util.ErrorUtils.getStackTraceAsString;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(EntityNotFoundException e) {
         ErrorResponse response = new ErrorResponse(
