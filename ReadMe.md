@@ -78,7 +78,7 @@ http://localhost:8080/h2-console
 ## Postman Collection
 
 The collection with all the requests is available at:
-[Postman Football Manager Collection](https://web.postman.co/workspace/My-Workspace~c9cf9a7a-3fc5-4c22-8366-9af4580dbec1/collection/28166767-d983f681-44da-4f51-b2e1-f391961971b0?action=share&source=copy-link&creator=28166767)
+[Postman Football Manager Collection](https://www.postman.com/atractor/codeseek-test-task/collection/83wksr1/postman-colletion-football-manager?action=share&creator=28166767)
 
 ---
 
